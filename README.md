@@ -75,9 +75,11 @@ Setup for server-side and client-side
 
 ## Setup commands
 
-- npm install
-- composer install
-- .env.example -> .env
+-   npm install
+-   composer install
+-   php artisan key:generate
+-
+-   .env.example -> .env
 
 composer update --ignore-platform-reqs
 php artisan db:wipe
