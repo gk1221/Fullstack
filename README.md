@@ -71,15 +71,14 @@ Setup for server-side and client-side
 
 -   php artisan serve
 -   npm run dev
--   extension=fileinfo, extension=pdo_mysql  (php.ini remove ; 給下載plugin用 給使用mysqldriver用)
-
+-   extension=fileinfo, extension=pdo_mysql (php.ini remove ; 給下載 plugin 用 給使用 mysqldriver 用)
 
 ## Setup commands
 
--   npm install 
--   composer install / composer update --ignore-platform-reqs 
+-   npm install
+-   composer install / composer update --ignore-platform-reqs
 -   php artisan key:generate
--
+-   php artisan migrate:refresh --seed
 -   .env.example -> .env
 
 composer update --ignore-platform-reqs
