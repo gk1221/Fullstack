@@ -20,7 +20,7 @@ class ListingController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Listing/Create', ['listings' => Listing::all()]);
     }
 
     /**
