@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Listing;
+use Auth;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -15,6 +16,8 @@ class IndexController extends Controller
         //         ->orderBy('price', 'ASC')
         //         ->first()
         // );
+
+        //dd(Auth::user());
         return inertia('Index/Index', ['message' => 'Hello from Laravel!']);
     }
     public function show()
