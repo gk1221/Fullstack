@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -16,8 +15,6 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
-        //validate
-
         if (
             !Auth::attempt(
                 $request->validate([
@@ -28,7 +25,7 @@ class AuthController extends Controller
             )
         ) {
             throw ValidationException::withMessages([
-                'email' => 'Authentication Failed',
+                'email' => 'Authentication failed',
             ]);
         }
 
@@ -36,6 +33,7 @@ class AuthController extends Controller
 
         return redirect()->intended('/listing');
     }
+
     public function destroy(Request $request)
     {
         Auth::logout();
@@ -44,5 +42,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('listing.index');
-    } //log out
+    }
 }

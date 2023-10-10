@@ -18,6 +18,7 @@ class IndexController extends Controller
         // );
 
         //dd(Auth::user());
+        //dd(Auth::check());
         return inertia('Index/Index', ['message' => 'Hello from Laravel!']);
     }
     public function show()
