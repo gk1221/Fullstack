@@ -67,7 +67,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## inertia
 
-Setup for server-side and client-side
+Setup for server-side an d client-side
 
 -   php artisan serve
 -   npm run dev

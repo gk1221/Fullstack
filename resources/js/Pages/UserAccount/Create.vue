@@ -52,6 +52,11 @@
                 <button class="btn-primary w-full" type="submit">
                     Create Account
                 </button>
+                <div class="mt-2 text-center">
+                    <Link :href="route('login')" class="text-sm text-gray-500"
+                        >Have an account?</Link
+                    >
+                </div>
             </div>
             <div></div>
         </div>
@@ -59,7 +64,7 @@
 </template>
 
 <script setup>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 
 const form = useForm({
     name: null,
@@ -68,5 +73,5 @@ const form = useForm({
     password_confirmation: null,
 });
 
-const register = () => form.post(route(""));
+const register = () => form.post(route("user-account.store"));
 </script>
