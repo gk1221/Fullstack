@@ -8,10 +8,15 @@ use Illuminate\Auth\Access\Response;
 
 class ListingPolicy
 {
+    public function before(?User $user, $ability){
+        if($user->is_admin /*&& $ability=='update'*/){
+            return true;
+        }
+    }
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -19,7 +24,7 @@ class ListingPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Listing $listing): bool
+    public function view(?User $user, Listing $listing): bool
     {
         return true;
     }
@@ -37,7 +42,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing): bool
     {
-        return true;
+        return $user->id === $listing->by_user_id;
     }
 
     /**
@@ -45,7 +50,7 @@ class ListingPolicy
      */
     public function delete(User $user, Listing $listing): bool
     {
-        return true;
+        return $user->id === $listing->by_user_id;
     }
 
     /**
@@ -53,7 +58,7 @@ class ListingPolicy
      */
     public function restore(User $user, Listing $listing): bool
     {
-        return true;
+        return $user->id === $listing->by_user_id;
     }
 
     /**
