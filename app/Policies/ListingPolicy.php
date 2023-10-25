@@ -9,7 +9,7 @@ use Illuminate\Auth\Access\Response;
 class ListingPolicy
 {
     public function before(?User $user, $ability){
-        if($user->is_admin /*&& $ability=='update'*/){
+        if($user?->is_admin /*&& $ability=='update'*/){
             return true;
         }
     }
@@ -50,7 +50,7 @@ class ListingPolicy
      */
     public function delete(User $user, Listing $listing): bool
     {
-        return $user->id === $listing->by_user_id;
+        return $user?->id === $listing->by_user_id;
     }
 
     /**
