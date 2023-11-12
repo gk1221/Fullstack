@@ -22,7 +22,7 @@ Route::get('/', [IndexController::class, 'index']);
 Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
 Route::resource('listing', ListingController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->only(['create', 'store', 'edit', 'update'])
     ->middleware('auth'); //for auth user only this route will be accessible
 Route::resource('listing', ListingController::class)->except([
     'create',
@@ -46,5 +46,8 @@ Route::prefix('realtor')
     ->name('realtor.')
     ->middleware('auth')
     ->group(function () {
-        Route::resource('listing', RealtorListingController::class);
+        Route::resource('listing', RealtorListingController::class)->only([
+            'index',
+            'destroy',
+        ]);
     });
