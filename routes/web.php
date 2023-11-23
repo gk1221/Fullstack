@@ -21,16 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [IndexController::class, 'index']);
 Route::get('/hello', [IndexController::class, 'show'])->middleware('auth');
 
-Route::resource('listing', ListingController::class)
-    ->only(['create', 'store', 'edit', 'update'])
-    ->middleware('auth'); //for auth user only this route will be accessible
-Route::resource('listing', ListingController::class)->except([
-    'create',
-    'store',
-    'edit',
-    'update',
-    'destroy',
-]); //for all users except the middleware
+Route::resource('listing', ListingController::class)->only(['index', 'show']); //for all users except the middleware
 
 Route::get('login', [AuthController::class, 'create'])->name('login');
 Route::post('login', [AuthController::class, 'store'])->name('login.store');
@@ -49,5 +40,9 @@ Route::prefix('realtor')
         Route::resource('listing', RealtorListingController::class)->only([
             'index',
             'destroy',
+            'edit',
+            'update',
+            'create',
+            'store',
         ]);
     });

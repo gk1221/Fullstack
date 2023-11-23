@@ -13,12 +13,54 @@ class RealtorListingController extends Controller
         $this->authorizeResource(Listing::class, 'listing');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        //dd(Auth::user()->listings); collection not the function
+        $filters = [
+            'deleted' => $request->boolean('deleted'),
+            ...$request->only(['by', 'order']),
+        ];
+
         return inertia('Realtor/Index', [
-            'listings' => Auth::user()->listings,
+            'filters' => $filters,
+            'listings' => Auth::user()
+                ->listings()
+                ->filter($filters)
+                ->paginate(5)
+                ->withQueryString(),
         ]);
+    }
+
+    public function create()
+    {
+        // $this->authorize('create', Listing::class);
+        return inertia('Realtor/Create', ['listings' => Listing::all()]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request
+            ->user()
+            ->listings()
+            ->create(
+                $request->validate([
+                    'beds' => 'required|integer|min:0|max:20',
+                    'baths' => 'required|integer|min:0|max:20',
+                    'area' => 'required|integer|min:15|max:1500',
+                    'city' => 'required',
+                    'street' => 'required',
+                    'street_nr' => 'required|min:1|max:1000',
+                    'price' => 'required|integer|min:1|max:2000000',
+                    'code' => 'required|max_digits:5',
+                ])
+            );
+        print $request;
+
+        return redirect()
+            ->route('realtor.listing.index')
+            ->with('success', 'Listing was created successfully');
     }
 
     public function destroy(Listing $listing)
@@ -28,5 +70,30 @@ class RealtorListingController extends Controller
         return redirect()
             ->back()
             ->with('success', 'Listing deleted successfully!');
+    }
+    public function edit(Listing $listing)
+    {
+        return inertia('Realtor/Edit', ['listing' => $listing]);
+    }
+
+    public function update(Request $request, Listing $listing)
+    {
+        $listing->update(
+            $request->validate([
+                'beds' => 'required|integer|min:0|max:20',
+                'baths' => 'required|integer|min:0|max:20',
+                'area' => 'required|integer|min:15|max:1500',
+                'city' => 'required',
+                'street' => 'required',
+                'street_nr' => 'required|min:1|max:1000',
+                'price' => 'required|integer|min:1|max:2000000',
+                'code' => 'required|max_digits:5',
+            ])
+        );
+        print $request;
+
+        return redirect()
+            ->route('realtor.listing.index')
+            ->with('success', 'Listing was updated successfully');
     }
 }
