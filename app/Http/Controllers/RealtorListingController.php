@@ -25,7 +25,7 @@ class RealtorListingController extends Controller
             'listings' => Auth::user()
                 ->listings()
                 ->filter($filters)
-                ->paginate(5)
+                ->paginate(8)
                 ->withQueryString(),
         ]);
     }
@@ -56,7 +56,6 @@ class RealtorListingController extends Controller
                     'code' => 'required|max_digits:5',
                 ])
             );
-        print $request;
 
         return redirect()
             ->route('realtor.listing.index')
@@ -87,13 +86,21 @@ class RealtorListingController extends Controller
                 'street' => 'required',
                 'street_nr' => 'required|min:1|max:1000',
                 'price' => 'required|integer|min:1|max:2000000',
-                'code' => 'required|max_digits:5',
+                'code' => 'required',
             ])
         );
-        print $request;
 
         return redirect()
             ->route('realtor.listing.index')
             ->with('success', 'Listing was updated successfully');
+    }
+
+    public function restore(Listing $listing)
+    {
+        $listing->restore();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Listing was restored successfully');
     }
 }
