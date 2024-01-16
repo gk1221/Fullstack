@@ -75,7 +75,7 @@
                                 })
                             "
                             class="block w-full btn-outline text-xs font-medium"
-                            >Image</Link
+                            >Image({{ listing.images_count }})</Link
                         >
                     </div>
                 </section>

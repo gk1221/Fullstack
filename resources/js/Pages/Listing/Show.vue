@@ -1,7 +1,14 @@
 <template>
     <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">
         <Box class="md:col-span-7 flex items-center">
-            <div class="w-full text-center font-medium text-gray-500">
+            <div v-if="listing.images.length" class="grid grid-cols-2 gap-1">
+                <img
+                    v-for="image in listing.images"
+                    :key="image.id"
+                    :src="image.src"
+                />
+            </div>
+            <div v-else class="w-full text-center font-medium text-gray-500">
                 No Images
             </div>
         </Box>
@@ -56,13 +63,19 @@
                         <div class="flex justify-between">
                             <div>Principal paid</div>
                             <div>
-                                <Price :price="listing.price" class="font-medium" />
+                                <Price
+                                    :price="listing.price"
+                                    class="font-medium"
+                                />
                             </div>
                         </div>
                         <div class="flex justify-between">
                             <div>Interest paid</div>
                             <div>
-                                <Price :price="totalInterest" class="font-medium" />
+                                <Price
+                                    :price="totalInterest"
+                                    class="font-medium"
+                                />
                             </div>
                         </div>
                     </div>
