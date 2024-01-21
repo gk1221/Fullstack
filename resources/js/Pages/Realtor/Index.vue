@@ -9,8 +9,17 @@
             :key="listing.id"
             :class="{ 'border-dashed': listing.deleted_at }"
         >
-            <div :class="{ 'opacity-25': listing.deleted_at }">
+            <div
+                :class="{ 'opacity-25': listing.deleted_at }"
+                class="flex justify-between"
+            >
                 <div>
+                    <div
+                        v-if="listing.sold_at != null"
+                        class="text-xs font-bold uppercase border border-dashed p-1 border-green-300 text-green-300 dark:border-green-600 dark:text-green-600 inline-block rounded-md mb-2"
+                    >
+                        sold
+                    </div>
                     <div class="xl:flex items-center gap-2">
                         <Price
                             :price="listing.price"
@@ -21,6 +30,7 @@
 
                     <ListingAddress :listing="listing" />
                 </div>
+
                 <section>
                     <div
                         class="flex items-center gap-1 text-gray-600 dark:text-gray-300"
@@ -67,7 +77,7 @@
                             >Restore</Link
                         >
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-2 text-center">
                         <Link
                             :href="
                                 route('realtor.listing.image.create', {
@@ -76,6 +86,17 @@
                             "
                             class="block w-full btn-outline text-xs font-medium"
                             >Image({{ listing.images_count }})</Link
+                        >
+                    </div>
+                    <div class="mt-2 text-center">
+                        <Link
+                            :href="
+                                route('realtor.listing.show', {
+                                    listing: listing.id,
+                                })
+                            "
+                            class="block w-full btn-outline text-xs font-medium"
+                            >Offers({{ listing.offers_count }})</Link
                         >
                     </div>
                 </section>

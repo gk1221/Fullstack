@@ -86,8 +86,9 @@
                 :listing-id="listing.id"
                 :price="listing.price"
                 @offer-updated="offer = $event"
-                v-if="user"
+                v-if="user && !offerMade"
             />
+            <OfferMade v-if="user && offerMade" :offer="offerMade" />
         </div>
     </div>
 </template>
@@ -98,6 +99,7 @@ import ListingSpace from "@/Components/ListingSpace.vue";
 import Price from "@/Components/Price.vue";
 import Box from "@/Components/UI/Box.vue";
 import MakeOffer from "@/Pages/Listing/Show/Components/MakeOffer.vue";
+import OfferMade from "@/Pages/Listing/Show/Components/OfferMade.vue";
 
 import { computed, ref } from "vue";
 
@@ -109,6 +111,7 @@ const duration = ref(25);
 
 const props = defineProps({
     listing: Object,
+    offerMade: Object,
 });
 
 const offer = ref(props.listing.price);
