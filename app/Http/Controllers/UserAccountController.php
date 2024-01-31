@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Auth;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 
 class UserAccountController extends Controller
@@ -23,6 +24,7 @@ class UserAccountController extends Controller
         );
 
         Auth::login($user);
+        event(new Registered($user));
 
         return redirect()
             ->route('listing.index')
