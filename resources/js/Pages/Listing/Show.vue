@@ -2,12 +2,23 @@
     <div class="flex flex-col-reverse md:grid md:grid-cols-12 gap-4">
         <Box class="md:col-span-7 flex items-center">
             <div v-if="listing.images.length" class="grid grid-cols-2 gap-1">
-                <img
+                <div
                     v-for="image in listing.images"
                     :key="image.id"
-                    :src="image.src"
-                />
+                    class="flex flex-col justify-between"
+                >
+                    <div class="card">
+                        <div class="image-box">
+                            <img :src="image.src" class="rounded-md" />
+                        </div>
+                        <div class="content">
+                            <h2>Create at</h2>
+                            <p>{{ fixDate(image.created_at) }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <div v-else class="w-full text-center font-medium text-gray-500">
                 No Images
             </div>
@@ -123,4 +134,83 @@ const { monthlyPayment, totalPaid, totalInterest } = useMonthlyPayment(
 );
 
 const user = computed(() => usePage().props.user);
+
+const fixDate = (date) => {
+    var old = new Date(date);
+
+    return `${old.getFullYear()}/${old.getMonth()}/${old.getDate()} ${old.getHours()}:${old.getMinutes()}`;
+};
 </script>
+<style scoped>
+.card {
+    width: 100%;
+    aspect-ratio: 1 / 0.7;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+}
+.card .image-box {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+.card .image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 90%;
+    border-radius: inherit;
+    transition: 0.5s ease-in-out;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid white;
+    border-radius: inherit;
+    opacity: 0;
+    transition: 0.4s ease-in-out;
+}
+
+.card:hover img {
+    filter: grayscale(1) brightness(0.4);
+}
+.card:hover::after {
+    opacity: 1;
+    inset: 20px;
+}
+
+.content {
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.content h2,
+.content p {
+    opacity: 0;
+    transition: 0.4s 0.2s ease;
+}
+.content h2 {
+    margin-bottom: 12px;
+    scale: 0.7;
+}
+.content p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #d1d1d1;
+    transform: translateY(50%);
+}
+.card:hover .content h2 {
+    scale: 1;
+    opacity: 1;
+}
+.card:hover .content P {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
