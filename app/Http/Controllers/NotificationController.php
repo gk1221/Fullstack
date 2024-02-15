@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
+
 use Illuminate\Http\Request;
+use Inertia\Response;
+
 
 class NotificationController extends Controller
 {
